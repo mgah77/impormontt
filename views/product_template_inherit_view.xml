@@ -1,0 +1,22 @@
+<odoo>
+    <record model="ir.ui.view" id="product_template_inherit_inventory_margin">
+        <field name="name">product.template.form.inherit.inventory.product.margin</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="before">
+                <label for="margin_calc" string="Margen"/>
+                <div>
+                    <field name="margin_calc" widget="float" class="oe_inline"/>(%%)
+                </div>
+            </xpath>
+<!--            <xpath expr="//group[@='group_standard_price']/"  position="after">-->
+<!--                -->
+<!--            </xpath>-->
+            <xpath expr="//field[@name='list_price']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

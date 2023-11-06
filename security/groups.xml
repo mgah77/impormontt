@@ -1,0 +1,7 @@
+<odoo>
+    <record id="group_comex" model="res.groups">
+	<field name="name">Modulo comex</field>
+    </record>
+
+    
+</odoo>
