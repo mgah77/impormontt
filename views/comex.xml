@@ -29,8 +29,8 @@
         <form string="Comex">
             <header>
                 <button string="Confimar Embarque" type="object" name="env_inventario" class="oe_highlight" confirm="Crear entrada de producto a inventario ?" attrs="{'invisible': [('state','in',('sent','arrived'))]}"/>
-                <button string="Confirmar arribo y cerrar orden" type="object" name="cierre" confirm="Cerrar documento ? (no mas acciones posibles)" attrs="{'invisible': [('state','in',('draft','arrived'))]}"/>
-                <button string="Actualizar Valores de Producto" type="object" name="valores" class="oe_highlight" confirm="Actualizar valores de productos ?" attrs="{'invisible': [('state','in',('draft','arrived'))]}"/>                
+                <button string="Confirmar arribo y cerrar orden" type="object" name="cierre" confirm="Actualizar valores antes de cerrar documento" attrs="{'invisible': [('state','in',('draft','arrived'))]}"/>
+                <button string="Actualizar Valores de Producto" type="object" name="valores" class="oe_highlight" confirm="Actualizar valores de productos ?" attrs="{'invisible': [('state','in',('draft','arrived'))]}"/>
                 <field name="state" widget="statusbar" />
             </header>
             <sheet>
