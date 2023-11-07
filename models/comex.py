@@ -3,8 +3,8 @@ from odoo import models, fields, api, _
 class ImportTemplate(models.Model):
     _name = 'comex'
     _description = 'valorizaciones comex'
-    
-    name = fields.Char(string="Nro Doc",readonly=True,default='New',copy=False)    
+
+    name = fields.Char(string="Nro Doc",readonly=True,default='New',copy=False)
     dolar = fields.Float(string="Valor Dolar", required=True, digits=(5,0))
     cif = fields.Float(string="% extra(CIF)", required=True)
     f_import = fields.Date(string="Fecha Importacion", required=True, states={'sent': [('readonly',True)], 'arrived': [('readonly',True)]})
@@ -19,14 +19,15 @@ class ImportTemplate(models.Model):
         ('draft','Borrador'),
         ('sent','Embarcado'),
         ('arrived','Arrivado')],string='Status',default='draft')
-    
+    cambio_valores = fields.Boolean(default = False)
+
     @api.onchange('producto_line')
     def _compute_dolar(self):
         """calcula cfu al cambiar linea"""
         t35 = 0
         tom = 0
-        for line in self.producto_line:    
-            line.porx = self.cif        
+        for line in self.producto_line:
+            line.porx = self.cif
             line.xcfu = self.dolar * line.valor
             line.mxcu = line.xcfu * line.porx / 100
             line.costounidad = line.xcfu + line.mxcu
@@ -40,7 +41,7 @@ class ImportTemplate(models.Model):
             tom = tom + line.totalwin
         self.total35 = t35
         self.totalm = tom
-        
+
 
     @api.onchange('dolar')
     def _compute_dolar2(self):
@@ -50,9 +51,9 @@ class ImportTemplate(models.Model):
         for line in self.producto_line:
             line.porx = self.cif
             line.xcfu = self.dolar * line.valor
-            line.mxcu = line.xcfu * line.porx / 100 
+            line.mxcu = line.xcfu * line.porx / 100
             line.costounidad = line.xcfu + line.mxcu
-            line.ganancia = line.valorventa - line.costounidad   
+            line.ganancia = line.valorventa - line.costounidad
             line.total = line.cantidad * line.xcfu
             line.totalx = line.cantidad * line.mxcu
             line.totalimport = line.total + line.totalx
@@ -68,8 +69,8 @@ class ImportTemplate(models.Model):
         """calcula cfu al cambiar cif"""
         t35 = 0
         tom = 0
-        for line in self.producto_line:    
-            line.porx = self.cif        
+        for line in self.producto_line:
+            line.porx = self.cif
             line.xcfu = self.dolar * line.valor
             line.mxcu = line.xcfu * line.porx / 100
             line.costounidad = line.xcfu + line.mxcu
@@ -99,7 +100,7 @@ class ImportTemplate(models.Model):
                 vals = {
                     'move_type': 'direct',
                     'state': 'confirmed',
-                    'scheduled_date': self.f_llegada,               
+                    'scheduled_date': self.f_llegada,
                     'location_id': '17',
                     'location_dest_id': '12',
                     'picking_type_id': 1,
@@ -107,7 +108,7 @@ class ImportTemplate(models.Model):
                     'company_id': 1,
                     'origin': self.name
                 }
-                self.env['stock.picking'].create(vals)   
+                self.env['stock.picking'].create(vals)
                 alpha_ot= self.env['stock.picking'].search([('origin','=',self.name)])
                 for line in order.producto_line:
                     vals = {
@@ -115,7 +116,7 @@ class ImportTemplate(models.Model):
                     'sequence': '10',
                     'company_id': 1,
                     'date_expected': alpha_ot.scheduled_date,
-                    'product_id': line.nombre.id,                
+                    'product_id': line.nombre.id,
                     'product_uom_qty': line.cantidad,
                     'product_uom': '1',
                     'location_id': '17',
@@ -145,7 +146,7 @@ class ImportTemplate(models.Model):
                     'reference': alpha_ot.name
                     }
                     self.env['stock.move.line'].create(vals)
-            self.state = 'sent'        
+            self.state = 'sent'
         return
 
     @api.multi
@@ -168,12 +169,12 @@ class ImportTemplate(models.Model):
                     'list_price': line.valorventa,
                     })
         return
-    
-    
+
+
 class ImportTemplate_line(models.Model):
     _name = 'comex.line'
     _description = 'linea ingreso de producto'
-    
+
     producto_id = fields.Many2one('comex',string ='id producto',required=True, ondelete='cascade', index=True, copy=False)
     nombre = fields.Many2one('product.template',string="Descripcion",required=True)
     dolar = fields.Float(default='1')
@@ -199,14 +200,6 @@ class ImportTemplate_line(models.Model):
         t35 = 0
         tom = 0
         for line in self:
-            line.ganancia = line.valorventa - line.costounidad 
+            line.ganancia = line.valorventa - line.costounidad
             line.totalventa = line.valorventa * line.cantidad
             line.totalwin = line.totalventa - line.totalimport
-            
-                
-            
-    
-
-
-    
-
