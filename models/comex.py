@@ -154,13 +154,13 @@ class ImportTemplate(models.Model):
     def cierre(self):
         if not self.cambio_valores:
             message = _("No se han actualizado los valores de productos.")
-                    self.notification_message = message
-                    return {
-                        'warning': {
-                            'title': _('Aviso'),
-                            'message': message,
-                        }
-                    }  # Check if cambio_valores is False
+            self.notification_message = message
+            return {
+                'warning': {
+                    'title': _('Aviso'),
+                    'message': message,
+                }
+            }  # Check if cambio_valores is False
             return
         else:
             self.state = 'arrived'
