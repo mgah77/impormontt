@@ -8,7 +8,7 @@
 </record>
 
 
-  <!-- tree view -->    
+  <!-- tree view -->
 <record id="comex_tree" model="ir.ui.view">
 	<field name="name">comex.tree</field>
 	<field name="model">comex</field>
@@ -19,39 +19,39 @@
         <field name="state" />
 	</tree>
 	</field>
-</record>	
-    
-<!-- form view -->    
+</record>
+
+<!-- form view -->
 <record id="comex_form" model="ir.ui.view">
     <field name="name">comex.form</field>
     <field name="model">comex</field>
     <field name="arch" type="xml">
         <form string="Comex">
             <header>
-                <button string="Confimar Embarque" type="object" name="env_inventario" class="oe_highlight" confirm="Crear entrada de producto a inventario ?" attrs="{'invisible': [('state','in',('sent','arrived'))]}"/> 
-                <button string="Confirmar arribo y cerrar orden" type="object" name="cierre" confirm="Cerrar documento ? (no mas acciones posibles)" attrs="{'invisible': [('state','in',('draft','arrived'))]}"/> 
-                <button string="Actualizar Valores de Producto" type="object" name="valores" class="oe_highlight" confirm="Cambiar valores de productos ?" attrs="{'invisible': [('state','in',('draft','arrived'))]}"/>                
+                <button string="Confimar Embarque" type="object" name="env_inventario" class="oe_highlight" confirm="Crear entrada de producto a inventario ?" attrs="{'invisible': [('state','in',('sent','arrived'))]}"/>
+                <button string="Confirmar arribo y cerrar orden" type="object" name="cierre" confirm="Cerrar documento ? (no mas acciones posibles)" attrs="{'invisible': [('state','in',('draft','arrived'))]}"/>
+                <button string="Actualizar Valores de Producto" type="object" name="valores" class="oe_highlight" confirm="Actualizar valores de productos ?" attrs="{'invisible': [('state','in',('draft','arrived'))]}"/>                
                 <field name="state" widget="statusbar" />
             </header>
-            <sheet> 
+            <sheet>
                 <div>
                         <label for="name" />
                         <h1>
                             <field name="name" />
                         </h1>
-                </div>              
+                </div>
                 <group>
                     <group>
                         <field name="dolar" />
                         <field name="cif" />
-                    </group>   
+                    </group>
                     <group>
-                        
+
                         <field name="f_import" />
                         <field name="f_llegada" />
                         <field name="proveedor" />
-                    </group>    
-                </group>                
+                    </group>
+                </group>
                <notebook>
                 <page string="Detalle por Unidad">
                     <field name="producto_line">
@@ -59,17 +59,17 @@
                             <field name="nombre" />
                             <field name="valor" />
                             <field name="cantidad" />
-                            <field name="xcfu" />                            
+                            <field name="xcfu" />
                             <field name="porx" />
-                            <field name="mxcu" /> 
-                            <field name="costounidad" /> 
-                            <field name="valorventa" />  
-                            <field name="ganancia" /> 
+                            <field name="mxcu" />
+                            <field name="costounidad" />
+                            <field name="valorventa" />
+                            <field name="ganancia" />
                             <field name="total" invisible="1"/>
-                            <field name="totalx" invisible="1"/> 
+                            <field name="totalx" invisible="1"/>
                             <field name="totalimport" invisible="1"/>
                             <field name="totalventa" invisible="1"/>
-                            <field name="totalwin" invisible="1"/>                                        
+                            <field name="totalwin" invisible="1"/>
                         </tree>
                     </field>
                 </page>
@@ -81,34 +81,34 @@
                             <field name="totalx" />
                             <field name="totalimport" />
                             <field name="totalventa" />
-                            <field name="totalwin" />                                                  
+                            <field name="totalwin" />
                         </tree>
                     </field>
-                </page>                     
-            </notebook> 
+                </page>
+            </notebook>
             <group>
                 <group>
                     <field name="total35" />
-                    <field name="totalm" />  
-                </group>  
+                    <field name="totalm" />
+                </group>
                 <group>
-                                 
-                </group>    
-            </group> 
-            </sheet>            
-        </form>  
-    </field>
-    </record>  
-    
-    
 
-   <!-- menu item to open template --> 
-  <act_window 
+                </group>
+            </group>
+            </sheet>
+        </form>
+    </field>
+    </record>
+
+
+
+   <!-- menu item to open template -->
+  <act_window
             id="action_comex"
             name="Importaciones"
             res_model="comex"   />
-    
-    
+
+
   <menuitem
             id="comex_top_menu"
             name="Comex"
@@ -116,14 +116,14 @@
             sequence="30" />
 
 
-    
+
     <menuitem
             id="comex"
             name="Comex"
             parent="comex_top_menu"
             groups="impormontt.group_comex"
             action="action_comex"
-            sequence="39" />   
+            sequence="39" />
 
     <record id="product_comex_action" model="ir.actions.act_window">
             <field name="name">Productos</field>
@@ -136,20 +136,20 @@
             <field name="context">{"search_default_filter_to_sell":1, "sale_multi_pricelist_product_template": 1}</field>
     </record>
 
-        <menuitem id="product_menu_comex" 
-            name="Productos" 
-            action="product_comex_action" 
-            parent="comex_top_menu" 
-            sequence="40" 
+        <menuitem id="product_menu_comex"
+            name="Productos"
+            action="product_comex_action"
+            parent="comex_top_menu"
+            sequence="40"
             groups="impormontt.group_comex"/>
 
-        <menuitem id="menu_prod" 
-            name="Product Variants" 
-            parent="product_menu_comex" 
-            sequence="2" 
-            groups="impormontt.group_comex" 
+        <menuitem id="menu_prod"
+            name="Product Variants"
+            parent="product_menu_comex"
+            sequence="2"
+            groups="impormontt.group_comex"
             active="False"/>
 
 
- 
+
 </odoo>

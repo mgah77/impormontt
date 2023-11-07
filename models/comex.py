@@ -160,7 +160,7 @@ class ImportTemplate(models.Model):
                     'title': _('Aviso'),
                     'message': message,
                 }
-            }  # Check if cambio_valores is False            
+            }  # Check if cambio_valores is False
         else:
             self.state = 'arrived'
             for order in self:
@@ -173,6 +173,9 @@ class ImportTemplate(models.Model):
     @api.multi
     def valores(self):
         for order in self:
+            order.write({
+                'cambio_valores': True
+            })
             for line in order.producto_line:
                 alpha_ot = self.env['product.template'].search([('id','=',line.nombre.id)])
                 alpha_ot.write({
