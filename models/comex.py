@@ -160,8 +160,7 @@ class ImportTemplate(models.Model):
                     'title': _('Aviso'),
                     'message': message,
                 }
-            }  # Check if cambio_valores is False
-            return
+            }  # Check if cambio_valores is False            
         else:
             self.state = 'arrived'
             for order in self:
