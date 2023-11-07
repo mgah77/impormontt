@@ -151,7 +151,7 @@ class ImportTemplate(models.Model):
 
     @api.multi
     def cierre(self):
-        if not cambio_valores:  # Check if cambio_valores is False
+        if not self.cambio_valores:  # Check if cambio_valores is False
             return
         else:
             self.state = 'arrived'
