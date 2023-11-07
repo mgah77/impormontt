@@ -20,6 +20,7 @@ class ImportTemplate(models.Model):
         ('sent','Embarcado'),
         ('arrived','Arrivado')],string='Status',default='draft')
     cambio_valores = fields.Boolean(default = False)
+    notification_message = fields.Char(string="Mensajes", readonly=True)
 
     @api.onchange('producto_line')
     def _compute_dolar(self):
@@ -151,7 +152,15 @@ class ImportTemplate(models.Model):
 
     @api.multi
     def cierre(self):
-        if not self.cambio_valores:  # Check if cambio_valores is False
+        if not self.cambio_valores:
+            message = _("No se han actualizado los valores de productos.")
+                    self.notification_message = message
+                    return {
+                        'warning': {
+                            'title': _('Aviso'),
+                            'message': message,
+                        }
+                    }  # Check if cambio_valores is False
             return
         else:
             self.state = 'arrived'
