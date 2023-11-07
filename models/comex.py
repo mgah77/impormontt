@@ -151,15 +151,15 @@ class ImportTemplate(models.Model):
 
     @api.multi
     def cierre(self):
-        if cambio_valores = False:
+        if not cambio_valores:  # Check if cambio_valores is False
             return
         else:
             self.state = 'arrived'
             for order in self:
                 for line in order.producto_line:
                     line.write({
-                        'state':'arrived'
-                        })
+                        'state': 'arrived'
+                    })
 
 
     @api.multi
