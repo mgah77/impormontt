@@ -56,7 +56,7 @@
                 <page string="Detalle por Unidad">
                     <field name="producto_line">
                         <tree editable="bottom">
-                            <field name="nombre" />
+                            <field name="nombre" options={'no_create': True}/>
                             <field name="valor" />
                             <field name="cantidad" />
                             <field name="xcfu" />
